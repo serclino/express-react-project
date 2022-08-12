@@ -33,7 +33,6 @@ const App = () => {
       data: formdata,
     })
       .then((res) => {
-        console.log("response:", res);
         setBackendData(res.data);
       })
       .catch((err) => {
@@ -45,22 +44,57 @@ const App = () => {
     <div>
       <h1>CSV File Upload</h1>
       <form onSubmit={(e) => handleUpload(e)}>
+        <p>Nahrání nového souboru způsobí, že se přemažou data.</p>
         <label>Select File</label>
         <input type="file" name="file" onChange={(e) => handleFile(e)} />
         <button type="submit">Upload</button>
       </form>
 
       {backendData && (
-        <section>
-          {backendData.map((item, id) => {
-            return item.map((unit, id) => {
+        <table>
+          <thead>
+            <tr>
+              {backendData[0]?.map((header, id) => {
+                return <th key={id}>{header}</th>;
+              })}
+              <th>Jiné</th>
+            </tr>
+          </thead>
+          <tbody>
+            {backendData.map((row, id) => {
               if (id === 0) {
-                return <h1 key={id}>{unit}</h1>;
+                return;
               }
-              return <p key={id}>{unit}</p>;
-            });
-          })}
-        </section>
+              const uniqueId = `${id}-row`;
+              return (
+                <tr key={id}>
+                  {row.map((cell, id) => {
+                    if (id === 0) {
+                      return (
+                        <td key={id}>
+                          <form id={uniqueId}>{cell}</form>
+                        </td>
+                      );
+                    } else {
+                      return (
+                        <td>
+                          <input
+                            type="radio"
+                            form={uniqueId}
+                            value={cell}
+                            name={uniqueId}
+                          />
+                          <label for={cell}>{cell}</label>
+                        </td>
+                      );
+                    }
+                  })}
+                  <input type="checkbox" />
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       )}
     </div>
   );
