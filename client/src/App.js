@@ -39,6 +39,12 @@ const App = () => {
       .catch((err) => {
         console.log(err);
       });
+    // reset state of the app to default when new file occurs
+    setTotalHours(0);
+    setWagePerHour(0);
+    Array.from(document.querySelectorAll("input[type=radio]:checked")).map(
+      (input) => (input.checked = false)
+    );
   };
 
   const handleCheck = (e, uniqueId) => {
@@ -145,8 +151,13 @@ const App = () => {
           <section>
             <p>Celkem hodin: {totalHours}</p>
             <label htmlFor="wagePerHour">Hodinová sazba:</label>
-            <input type="number" name="wagePerHour" value={wagePerHour} onChange={(e) => setWagePerHour(e.target.value)} />
-            <p>Celková cena za projekt: {totalHours * wagePerHour}</p>
+            <input
+              type="number"
+              name="wagePerHour"
+              value={wagePerHour}
+              onChange={(e) => setWagePerHour(e.target.value)}
+            />
+            <p>Celková cena za projekt: {totalHours * wagePerHour} Kč</p>
           </section>
         </>
       )}
