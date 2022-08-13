@@ -55,7 +55,19 @@ app.post("/data", (req, res) => {
             csvData.push(dataRow);
           })
           .on("end", () => {
-            console.log(csvData);
+            console.log("before cleaning data", csvData);
+            // converts strings into nums within appropriate cells
+            csvData.forEach((row, id) => {
+              if (id === 0) {
+                return;
+              }
+              for (let i = 0; i < row.length; i++) {
+                if (i !== 0) {
+                  row[i] = Number(row[i]);
+                }
+              }
+            });
+            console.log("after cleaning data", csvData);
             res.send(csvData);
           });
       }
