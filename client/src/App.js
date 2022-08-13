@@ -6,6 +6,16 @@ const App = () => {
   const [backendData, setBackendData] = useState([]);
   const [file, setFile] = useState(null);
 
+  const handleCheck = (e, uniqueId) => {
+    // first deselect last input in the row if it is already selected
+    const lastInput = document.getElementById(`lastInput-${uniqueId}`);
+    if ((lastInput.type = "number")) {
+      lastInput.type = "hidden";
+      lastInput.value = "";
+    }
+    // add input hours to totalHours
+  };
+
   useEffect(() => {
     Axios({
       url: "/data",
@@ -50,7 +60,7 @@ const App = () => {
         <button type="submit">Upload</button>
       </form>
 
-      {backendData && (
+      {backendData.length > 0 && (
         <table>
           <thead>
             <tr>
@@ -63,7 +73,7 @@ const App = () => {
           <tbody>
             {backendData.map((row, id) => {
               if (id === 0) {
-                return;
+                return null;
               }
               const uniqueId = `${id}-row`;
               return (
@@ -77,19 +87,37 @@ const App = () => {
                       );
                     } else {
                       return (
-                        <td>
+                        <td key={id}>
                           <input
                             type="radio"
                             form={uniqueId}
                             value={cell}
                             name={uniqueId}
+                            onClick={(e) => handleCheck(e, uniqueId)}
+                            disabled={!cell}
                           />
                           <label for={cell}>{cell}</label>
                         </td>
                       );
                     }
                   })}
-                  <input type="checkbox" />
+                  <td>
+                    <input
+                      type="radio"
+                      form={uniqueId}
+                      name={uniqueId}
+                      value=""
+                      onClick={(e) =>
+                        (document.getElementById(`lastInput-${uniqueId}`).type =
+                          "number")
+                      }
+                    />
+                    <input
+                      type="hidden"
+                      name={uniqueId}
+                      id={`lastInput-${uniqueId}`}
+                    />
+                  </td>
                 </tr>
               );
             })}
