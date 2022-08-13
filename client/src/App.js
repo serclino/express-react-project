@@ -96,7 +96,7 @@ const App = () => {
                             onClick={(e) => handleCheck(e, uniqueId)}
                             disabled={!cell}
                           />
-                          <label for={cell}>{cell}</label>
+                          <label htmlFor={cell}>{cell}</label>
                         </td>
                       );
                     }

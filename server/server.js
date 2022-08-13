@@ -18,6 +18,10 @@ const convertStringToNum = (csvData) => {
     for (let i = 0; i < row.length; i++) {
       if (i !== 0) {
         row[i] = Number(row[i]);
+        // to solve situation when user uploaded file with letters in cells in which should be nums
+        if (isNaN(row[i])) {
+          row[i] = 0;
+        }
       }
     }
   });
