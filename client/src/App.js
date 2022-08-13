@@ -6,16 +6,6 @@ const App = () => {
   const [backendData, setBackendData] = useState([]);
   const [file, setFile] = useState(null);
 
-  const handleCheck = (e, uniqueId) => {
-    // first deselect last input in the row if it is already selected
-    const lastInput = document.getElementById(`lastInput-${uniqueId}`);
-    if ((lastInput.type = "number")) {
-      lastInput.type = "hidden";
-      lastInput.value = "";
-    }
-    // add input hours to totalHours
-  };
-
   useEffect(() => {
     Axios({
       url: "/data",
@@ -48,6 +38,16 @@ const App = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handleCheck = (e, uniqueId) => {
+    // first deselect last input in the row if it is already selected
+    const lastInput = document.getElementById(`lastInput-${uniqueId}`);
+    if ((lastInput.type = "number")) {
+      lastInput.type = "hidden";
+      lastInput.value = "";
+    }
+    // add input hours to totalHours
   };
 
   return (

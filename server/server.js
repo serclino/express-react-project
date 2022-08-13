@@ -9,7 +9,23 @@ let csvData = [];
 
 app.use(upload());
 
+// helper functions
+const convertStringToNum = (csvData) => {
+  csvData.forEach((row, id) => {
+    if (id === 0) {
+      return;
+    }
+    for (let i = 0; i < row.length; i++) {
+      if (i !== 0) {
+        row[i] = Number(row[i]);
+      }
+    }
+  });
+  return csvData;
+};
+
 // following code checks if there is already an uploaded file
+// if yes, send it back to frontend
 app.get("/data", (req, res) => {
   csvData = [];
   if (fs.existsSync("./uploads/file.csv")) {
@@ -26,7 +42,9 @@ app.get("/data", (req, res) => {
         csvData.push(dataRow);
       })
       .on("end", () => {
-        console.log(csvData);
+        console.log("before cleaning data", csvData);
+        convertStringToNum(csvData);
+        console.log("after cleaning data", csvData);
         res.send(csvData);
       });
   } else {
@@ -56,17 +74,7 @@ app.post("/data", (req, res) => {
           })
           .on("end", () => {
             console.log("before cleaning data", csvData);
-            // converts strings into nums within appropriate cells
-            csvData.forEach((row, id) => {
-              if (id === 0) {
-                return;
-              }
-              for (let i = 0; i < row.length; i++) {
-                if (i !== 0) {
-                  row[i] = Number(row[i]);
-                }
-              }
-            });
+            convertStringToNum(csvData);
             console.log("after cleaning data", csvData);
             res.send(csvData);
           });
