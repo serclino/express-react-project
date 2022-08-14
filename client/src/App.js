@@ -38,6 +38,7 @@ const App = () => {
       })
       .catch((err) => {
         console.log(err);
+        alert(err.response.data.message);
       });
     // reset state of the app to default when new file occurs
     setTotalHours(0);
@@ -129,6 +130,7 @@ const App = () => {
       url: "/delete",
       method: "GET",
     }).then((res) => {
+      document.querySelector(".chooseFile").value = "";
       setBackendData([]);
       setFile(null);
       alert(res.data);
@@ -141,7 +143,13 @@ const App = () => {
       <form onSubmit={(e) => handleUpload(e)}>
         <p>Nahrání nového souboru způsobí, že se přepíšou data.</p>
         <label>Select File</label>
-        <input type="file" name="file" onChange={(e) => handleFile(e)} />
+        <input
+          accept=".csv"
+          className="chooseFile"
+          type="file"
+          name="file"
+          onChange={(e) => handleFile(e)}
+        />
         <button type="submit">Upload</button>
       </form>
 

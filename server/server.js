@@ -35,7 +35,6 @@ app.get("/data", (req, res) => {
   if (fs.existsSync("./uploads/file.csv")) {
     console.log("file exists");
     const file = __dirname + "/uploads/file.csv";
-    console.log(file);
     fs.createReadStream(file)
       .pipe(
         parse({
@@ -60,7 +59,7 @@ app.get("/data", (req, res) => {
 app.get("/delete", (req, res) => {
   try {
     fs.unlinkSync("./uploads/file.csv");
-    res.send('File deleted.')
+    res.send("File deleted.");
   } catch (err) {
     console.log(err);
   }
@@ -87,10 +86,17 @@ app.post("/data", (req, res) => {
             csvData.push(dataRow);
           })
           .on("end", () => {
-            console.log("before cleaning data", csvData);
+            //console.log("before cleaning data", csvData);
             convertStringToNum(csvData);
-            console.log("after cleaning data", csvData);
+            //console.log("after cleaning data", csvData);
             res.send(csvData);
+          })
+          .on("error", (err) => {
+            fs.unlinkSync("./uploads/file.csv");
+            res.status(422).send({
+              message:
+                "Obsah CSV souboru není správně formátovaný. Opravte jej, tak aby splňoval požadované zadání, a pak jej znovu nahrajte.",
+            });
           });
       }
     });
