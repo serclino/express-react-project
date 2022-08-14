@@ -48,7 +48,7 @@ const App = () => {
     const inputJine = Array.from(
       document.querySelectorAll("input[type=number]")
     );
-    inputJine.pop();
+    inputJine.pop(); // necessary line, otherwise input for wage will disapper
     inputJine.map((input) => {
       input.value = 0;
       input.type = "hidden";
@@ -81,6 +81,48 @@ const App = () => {
       total += counterArr[i];
     }
     setTotalHours(total);
+  };
+
+  const download = () => {
+    const dataToParse = [];
+    const rows = Array.from(document.querySelectorAll("tr"));
+    rows.shift(); // we don't need headers row
+    rows.forEach((row) => {
+      const tds = Array.from(row.childNodes);
+      // název
+      const nazev = tds[0].innerText;
+      // hodiny
+      const checkedInput = tds.find((td) => td.children[0].checked === true);
+      const hodiny = checkedInput?.children[0].value || "0";
+      // push the object to array
+      dataToParse.push({
+        nazev: nazev,
+        hodiny: hodiny,
+      });
+    });
+    const csvData = objectToCsv(dataToParse);
+    console.log(csvData);
+    // download (this can be single func...)
+    const blob = new Blob([csvData], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.setAttribute("hidden", "");
+    a.setAttribute("href", url);
+    a.setAttribute("download", "náklady.csv");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
+  const objectToCsv = (dataToParse) => {
+    const cvsRows = [["název", "hodiny"]];
+    for (const row of dataToParse) {
+      cvsRows.push([`"${row.nazev}"`, `${row.hodiny}`].join(","));
+    }
+    cvsRows.push(["celkem hodin", `${totalHours}`]);
+    cvsRows.push(["hodinová sazba", `${wagePerHour} Kč`]);
+    cvsRows.push(["celková cena", `${totalHours * wagePerHour} Kč`]);
+    return cvsRows.join("\n");
   };
 
   return (
@@ -166,6 +208,7 @@ const App = () => {
               })}
             </tbody>
           </table>
+
           <section>
             <p>Celkem hodin: {totalHours}</p>
             <form onSubmit={(e) => e.preventDefault()}>
@@ -180,6 +223,10 @@ const App = () => {
             </form>
             <p>Celková cena za projekt: {totalHours * wagePerHour} Kč</p>
           </section>
+
+          <button onClick={download} type="button">
+            Export
+          </button>
         </>
       )}
     </div>
