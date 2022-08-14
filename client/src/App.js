@@ -45,14 +45,26 @@ const App = () => {
     Array.from(document.querySelectorAll("input[type=radio]:checked")).map(
       (input) => (input.checked = false)
     );
+    const inputJine = Array.from(
+      document.querySelectorAll("input[type=number]")
+    );
+    inputJine.pop();
+    inputJine.map((input) => {
+      input.value = 0;
+      input.type = "hidden";
+      return undefined;
+    });
   };
 
   const handleCheck = (e, uniqueId) => {
-    // first deselect last input in the row if it is already selected
     const lastInput = document.getElementById(`lastInput-${uniqueId}`);
-    if ((lastInput.type = "number")) {
-      lastInput.type = "hidden";
-      lastInput.value = "";
+    // deselect last input
+    lastInput.type = "hidden";
+    lastInput.value = 0;
+    if (e.target.id === `lastRadio-${uniqueId}`) {
+      // select last input
+      lastInput.type = "number";
+      document.getElementById(`lastRadio-${uniqueId}`).value = 0;
     }
     // submit form of the current row
     document.getElementById(`${uniqueId}`).requestSubmit();
@@ -130,17 +142,22 @@ const App = () => {
                         type="radio"
                         form={uniqueId}
                         name={uniqueId}
-                        value=""
-                        onClick={(e) =>
-                          (document.getElementById(
-                            `lastInput-${uniqueId}`
-                          ).type = "number")
-                        }
+                        id={`lastRadio-${uniqueId}`}
+                        onClick={(e) => handleCheck(e, uniqueId)}
                       />
                       <input
                         type="hidden"
                         name={uniqueId}
                         id={`lastInput-${uniqueId}`}
+                        onChange={(e) => {
+                          // change the value of associated input
+                          document.getElementById(
+                            `lastRadio-${uniqueId}`
+                          ).value = e.target.value;
+                          document
+                            .getElementById(`${uniqueId}`)
+                            .requestSubmit();
+                        }}
                       />
                     </td>
                   </tr>
@@ -150,13 +167,15 @@ const App = () => {
           </table>
           <section>
             <p>Celkem hodin: {totalHours}</p>
-            <label htmlFor="wagePerHour">Hodinová sazba:</label>
-            <input
-              type="number"
-              name="wagePerHour"
-              value={wagePerHour}
-              onChange={(e) => setWagePerHour(e.target.value)}
-            />
+            <form>
+              <label htmlFor="wagePerHour">Hodinová sazba:</label>
+              <input
+                type="number"
+                name="wagePerHour"
+                value={wagePerHour}
+                onChange={(e) => setWagePerHour(e.target.value)}
+              />
+            </form>
             <p>Celková cena za projekt: {totalHours * wagePerHour} Kč</p>
           </section>
         </>
