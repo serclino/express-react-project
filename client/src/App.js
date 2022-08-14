@@ -168,7 +168,7 @@ const App = () => {
           </table>
           <section>
             <p>Celkem hodin: {totalHours}</p>
-            <form>
+            <form onSubmit={(e) => e.preventDefault()}>
               <label htmlFor="wagePerHour">Hodinová sazba:</label>
               <input
                 type="number"
