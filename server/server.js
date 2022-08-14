@@ -46,13 +46,23 @@ app.get("/data", (req, res) => {
         csvData.push(dataRow);
       })
       .on("end", () => {
-        console.log("before cleaning data", csvData);
+        // console.log("before cleaning data", csvData);
         convertStringToNum(csvData);
-        console.log("after cleaning data", csvData);
+        // console.log("after cleaning data", csvData);
         res.send(csvData);
       });
   } else {
     console.log("file does not exist");
+  }
+});
+
+// remove file from the server
+app.get("/delete", (req, res) => {
+  try {
+    fs.unlinkSync("./uploads/file.csv");
+    res.send('File deleted.')
+  } catch (err) {
+    console.log(err);
   }
 });
 

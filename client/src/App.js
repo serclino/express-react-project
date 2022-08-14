@@ -101,7 +101,6 @@ const App = () => {
       });
     });
     const csvData = objectToCsv(dataToParse);
-    console.log(csvData);
     // download (this can be single func...)
     const blob = new Blob([csvData], { type: "text/csv" });
     const url = window.URL.createObjectURL(blob);
@@ -125,6 +124,17 @@ const App = () => {
     return cvsRows.join("\n");
   };
 
+  const deleteFile = () => {
+    Axios({
+      url: "/delete",
+      method: "GET",
+    }).then((res) => {
+      setBackendData([]);
+      setFile(null);
+      alert(res.data);
+    });
+  };
+
   return (
     <div>
       <h1>CSV File Upload</h1>
@@ -137,6 +147,10 @@ const App = () => {
 
       {backendData.length > 0 && (
         <>
+          <button type="button" onClick={deleteFile}>
+            Delete file
+          </button>
+
           <table>
             <thead>
               <tr>
