@@ -128,7 +128,7 @@ const App = () => {
   const deleteFile = () => {
     Axios({
       url: "/delete",
-      method: "GET",
+      method: "DELETE",
     }).then((res) => {
       document.querySelector(".chooseFile").value = "";
       setBackendData([]);

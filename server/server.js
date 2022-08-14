@@ -33,7 +33,6 @@ const convertStringToNum = (csvData) => {
 app.get("/data", (req, res) => {
   csvData = [];
   if (fs.existsSync("./uploads/file.csv")) {
-    console.log("file exists");
     const file = __dirname + "/uploads/file.csv";
     fs.createReadStream(file)
       .pipe(
@@ -50,13 +49,11 @@ app.get("/data", (req, res) => {
         // console.log("after cleaning data", csvData);
         res.send(csvData);
       });
-  } else {
-    console.log("file does not exist");
   }
 });
 
 // remove file from the server
-app.get("/delete", (req, res) => {
+app.delete("/delete", (req, res) => {
   try {
     fs.unlinkSync("./uploads/file.csv");
     res.send("File deleted.");
