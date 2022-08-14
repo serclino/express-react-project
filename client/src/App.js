@@ -147,6 +147,7 @@ const App = () => {
                       />
                       <input
                         type="hidden"
+                        min="0"
                         name={uniqueId}
                         id={`lastInput-${uniqueId}`}
                         onChange={(e) => {
@@ -171,6 +172,7 @@ const App = () => {
               <label htmlFor="wagePerHour">Hodinová sazba:</label>
               <input
                 type="number"
+                min="0"
                 name="wagePerHour"
                 value={wagePerHour}
                 onChange={(e) => setWagePerHour(e.target.value)}
