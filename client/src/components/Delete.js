@@ -1,5 +1,5 @@
-import React from 'react'
-import Axios from 'axios';
+import React from "react";
+import Axios from "axios";
 
 export const Delete = ({ setBackendData, setFile }) => {
   const deleteFile = () => {
@@ -19,4 +19,4 @@ export const Delete = ({ setBackendData, setFile }) => {
       Delete file
     </button>
   );
-}
+};

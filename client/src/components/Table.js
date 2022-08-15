@@ -11,11 +11,11 @@ export const Table = ({
 }) => {
   const handleCheck = (e, uniqueId) => {
     const lastInput = document.getElementById(`lastInput-${uniqueId}`);
-    // deselect last input
+    // deselect last input of the current row
     lastInput.type = "hidden";
     lastInput.value = 0;
     if (e.target.id === `lastRadio-${uniqueId}`) {
-      // select last input
+      // select last input of the current row
       lastInput.type = "number";
       document.getElementById(`lastRadio-${uniqueId}`).value = 0;
     }
@@ -94,7 +94,7 @@ export const Table = ({
                     name={uniqueId}
                     id={`lastInput-${uniqueId}`}
                     onChange={(e) => {
-                      // change the value of associated input
+                      // change the value of an associated radio input
                       document.getElementById(`lastRadio-${uniqueId}`).value =
                         e.target.value;
                       document.getElementById(`${uniqueId}`).requestSubmit();

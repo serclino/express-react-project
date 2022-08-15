@@ -51,7 +51,7 @@ export const Upload = ({
   return (
     <form onSubmit={(e) => handleUpload(e)}>
       <p>Nahrání nového souboru způsobí, že se přepíšou data.</p>
-      <label style={{marginRight: '10px'}}>Select File:</label>
+      <label style={{marginRight: '10px'}}>Soubor:</label>
       <input
         accept=".csv"
         className="chooseFile"

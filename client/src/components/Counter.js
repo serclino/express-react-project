@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react";
 
-export const Counter = ({ totalHours, wagePerHour, setWagePerHour}) => {
+export const Counter = ({ totalHours, wagePerHour, setWagePerHour }) => {
   return (
     <section>
       <p>Celkem hodin: {totalHours}</p>
@@ -17,4 +17,4 @@ export const Counter = ({ totalHours, wagePerHour, setWagePerHour}) => {
       <p>Celková cena za projekt: {totalHours * wagePerHour} Kč</p>
     </section>
   );
-}
+};

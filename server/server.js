@@ -52,16 +52,6 @@ app.get("/data", (req, res) => {
   }
 });
 
-// remove file from the server
-app.delete("/delete", (req, res) => {
-  try {
-    fs.unlinkSync(path);
-    res.send("Soubor smazán.");
-  } catch (err) {
-    console.log(err);
-  }
-});
-
 // save file to 'uploads' directory:
 app.post("/data", (req, res) => {
   if (req.files) {
@@ -94,6 +84,16 @@ app.post("/data", (req, res) => {
           });
       }
     });
+  }
+});
+
+// remove file from the server
+app.delete("/delete", (req, res) => {
+  try {
+    fs.unlinkSync(path);
+    res.send("Soubor smazán.");
+  } catch (err) {
+    console.log(err);
   }
 });
 
