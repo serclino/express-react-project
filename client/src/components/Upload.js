@@ -51,7 +51,7 @@ export const Upload = ({
   return (
     <form onSubmit={(e) => handleUpload(e)}>
       <p>Nahrání nového souboru způsobí, že se přepíšou data.</p>
-      <label>Select File</label>
+      <label style={{marginRight: '10px'}}>Select File:</label>
       <input
         accept=".csv"
         className="chooseFile"
@@ -59,7 +59,7 @@ export const Upload = ({
         name="file"
         onChange={(e) => handleFile(e)}
       />
-      <button type="submit">Upload</button>
+      <button type="submit" style={{marginRight: '10px'}}>Upload</button>
       {backendData.length > 0 && (
         <Delete setBackendData={setBackendData} setFile={setFile} />
       )}
