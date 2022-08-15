@@ -13,7 +13,7 @@ const App = () => {
   // fetch data from the server if CSV file is already uploaded
   useEffect(() => {
     Axios({
-      url: "/data",
+      url: "/fetch",
       method: "GET",
     }).then((res) => {
       setBackendData(res.data);

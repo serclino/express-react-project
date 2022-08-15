@@ -30,7 +30,7 @@ const convertStringToNum = (csvData) => {
 
 // following code checks if there is already an uploaded file
 // if yes, send it back to frontend
-app.get("/data", (req, res) => {
+app.get("/fetch", (req, res) => {
   csvData = [];
   if (fs.existsSync(path)) {
     const file = __dirname + "/uploads/file.csv";
@@ -47,8 +47,10 @@ app.get("/data", (req, res) => {
         // console.log("before cleaning data", csvData);
         convertStringToNum(csvData);
         // console.log("after cleaning data", csvData);
-        res.send(csvData);
+        res.status(201).send(csvData);
       });
+  } else {
+    res.sendStatus(204);
   }
 });
 
