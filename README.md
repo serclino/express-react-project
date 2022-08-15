@@ -6,21 +6,21 @@ The tool which lets you upload CSV file (**.csv extension**), displays table dat
 
 From the root directory:
 
-- a) to start client side:
+1. to start client side:
 
-```text
-cd client
-npm install
-npm start
-```
+    ```text
+    cd client
+    npm install
+    npm start
+    ```
 
-- b) to start server side:
+2. to start server side:
 
-```text
-cd server
-npm install
-node server
-```
+    ```text
+    cd server
+    npm install
+    node server
+    ```
 
 ## Technologies
 
@@ -38,7 +38,9 @@ node server
 
 ## Bonuses
 
-- [x] validation: 1. only CSV file can uploaded, 2. if CVS content doesn't have proper form (i.e. short rows), then user is alerted
+- [x] validation:
+  - [x] only CSV file can be uploaded
+  - [x] if CVS content doesn't have proper form (i.e. short rows), then user is alerted
 - [x] on the first render, file is fetched to the client side, if it's already uploaded
 - [x] delete button - it deletes file from the backend
 - [x] if CSV cells contains letters (or empty cells) in place where should be numbers, then "0" is rendered
