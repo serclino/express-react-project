@@ -108,7 +108,7 @@ const App = () => {
     const a = document.createElement("a");
     a.setAttribute("hidden", "");
     a.setAttribute("href", url);
-    a.setAttribute("download", "náklady.csv");
+    a.setAttribute("download", "Náklady.csv");
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
