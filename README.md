@@ -43,9 +43,9 @@ From the root directory:
   - [x] if CVS content doesn't have proper form (i.e. short rows), then user is alerted
 - [x] on the first render, file is fetched to the client side, if it's already uploaded
 - [x] delete button - it deletes file from the backend
-- [x] if CSV cells contains letters (or empty cells) in place where should be numbers, then "0" is rendered
+- [x] if CSV cells contain letters (or they're empty) in place where should be numbers, then "0" is rendered
 - [x] radio input with value 0 is disabled and cannot be choosed
-- [x] when any input is selected within some of the rows, then "0" is exported
+- [x] when no input is selected within some of the rows, then "0" is exported
 
 ## Limits and future
 
