@@ -10,7 +10,7 @@ export const Delete = ({ setBackendData, setFile }) => {
       document.querySelector(".chooseFile").value = "";
       setBackendData([]);
       setFile(null);
-      alert(res.data);
+      alert('Soubor smazán.');
     });
   };
 

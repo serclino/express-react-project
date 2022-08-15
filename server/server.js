@@ -75,7 +75,7 @@ app.post("/data", (req, res) => {
           })
           .on("end", () => {
             convertStringToNum(csvData);
-            res.send(csvData);
+            res.status(201).send(csvData);
           })
           .on("error", (err) => {
             fs.unlinkSync(path);
@@ -93,7 +93,7 @@ app.post("/data", (req, res) => {
 app.delete("/delete", (req, res) => {
   try {
     fs.unlinkSync(path);
-    res.send("Soubor smazán.");
+    res.sendStatus(204);
   } catch (err) {
     console.log(err);
   }
