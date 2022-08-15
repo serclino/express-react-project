@@ -4,10 +4,10 @@ const { parse } = require("csv-parse");
 const fs = require("fs");
 
 const app = express();
-
-let csvData = [];
-
 app.use(upload());
+
+const path = "./uploads/file.csv";
+let csvData = [];
 
 // helper functions
 const convertStringToNum = (csvData) => {
@@ -32,7 +32,7 @@ const convertStringToNum = (csvData) => {
 // if yes, send it back to frontend
 app.get("/data", (req, res) => {
   csvData = [];
-  if (fs.existsSync("./uploads/file.csv")) {
+  if (fs.existsSync(path)) {
     const file = __dirname + "/uploads/file.csv";
     fs.createReadStream(file)
       .pipe(
@@ -55,8 +55,8 @@ app.get("/data", (req, res) => {
 // remove file from the server
 app.delete("/delete", (req, res) => {
   try {
-    fs.unlinkSync("./uploads/file.csv");
-    res.send("File deleted.");
+    fs.unlinkSync(path);
+    res.send("Soubor smazán.");
   } catch (err) {
     console.log(err);
   }
@@ -64,14 +64,13 @@ app.delete("/delete", (req, res) => {
 
 // save file to 'uploads' directory:
 app.post("/data", (req, res) => {
-  // console.log(req);
   if (req.files) {
     csvData = [];
     const file = req.files.csv;
     const filename = file.name;
     file.mv(`./uploads/${filename}`, (err) => {
       if (err) {
-        res.send(err); // later make this better
+        res.send(err);
       } else {
         fs.createReadStream(__dirname + `/uploads/${filename}`)
           .pipe(
@@ -83,13 +82,11 @@ app.post("/data", (req, res) => {
             csvData.push(dataRow);
           })
           .on("end", () => {
-            //console.log("before cleaning data", csvData);
             convertStringToNum(csvData);
-            //console.log("after cleaning data", csvData);
             res.send(csvData);
           })
           .on("error", (err) => {
-            fs.unlinkSync("./uploads/file.csv");
+            fs.unlinkSync(path);
             res.status(422).send({
               message:
                 "Obsah CSV souboru není správně formátovaný. Opravte jej, tak aby splňoval požadované zadání, a pak jej znovu nahrajte.",
